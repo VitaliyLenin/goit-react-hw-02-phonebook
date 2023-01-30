@@ -1,0 +1,9 @@
+.phonebook_wrapper {
+  display: grid;
+  justify-items: center;
+}
+
+.contacts_wrapper {
+  display: grid;
+  justify-items: center;
+}
