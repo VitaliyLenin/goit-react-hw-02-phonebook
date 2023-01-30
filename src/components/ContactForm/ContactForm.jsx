@@ -10,15 +10,17 @@ class ContactForm extends Component {
       { id: nanoid(), name: 'Oleshko Anastasia' },
     ],
     name: '',
+    number: '',
   };
 
   addContact = e => {
     e.preventDefault();
     this.setState(prevState => {
-      const { name, contacts } = prevState;
+      const { name, contacts, number } = prevState;
       const newContact = {
         id: nanoid(),
         name,
+        number,
       };
 
       return { contacts: [newContact, ...contacts] };
@@ -33,7 +35,12 @@ class ContactForm extends Component {
   render() {
     const { addContact, handleChange } = this;
     const { contacts } = this.state;
-    const names = contacts.map(({ id, name }) => <li key={id}> {name} </li>);
+    const names = contacts.map(({ id, name, number }) => (
+      <li key={id}>
+        {' '}
+        {name} : {number}{' '}
+      </li>
+    ));
 
     return (
       <div className={css.form_wrapper}>
@@ -51,6 +58,16 @@ class ContactForm extends Component {
               placeholder="Contact name"
             />
             <button type="submit"> Add contact</button>
+
+            <label htmlFor="">Number</label>
+            <input
+              onChange={handleChange}
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+            />
           </form>
         </div>
 
