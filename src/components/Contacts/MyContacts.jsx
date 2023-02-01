@@ -3,7 +3,7 @@ import { Component } from 'react';
 
 import css from './MyContacts.module.css';
 
-class ContactForm extends Component {
+class MyContacts extends Component {
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -132,4 +132,4 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+export default MyContacts;

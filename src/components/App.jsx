@@ -1,9 +1,9 @@
-import ContactForm from './ContactForm/MyContacts';
+import MyContacts from './Contacts/MyContacts';
 
 export const App = () => {
   return (
     <div>
-      <ContactForm />
+      <MyContacts />
     </div>
   );
 };
