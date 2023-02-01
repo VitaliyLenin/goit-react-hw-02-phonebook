@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types';
 
-// import css from './MyContactsFilter.module.css';
+import css from './MyContactsFilter.module.css';
 
 const MyContactsFilter = ({ handleChange }) => {
   return (
-    <div>
+    <div className={css.filter_wrap}>
       <label>Find contacts by name</label>
-      <input onChange={handleChange} name="filter" type="text" />
+      <input
+        className={css.input}
+        onChange={handleChange}
+        name="filter"
+        type="text"
+      />
     </div>
   );
 };

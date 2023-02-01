@@ -76,17 +76,12 @@ class MyContacts extends Component {
     const contacts = this.getFilteredContacts();
 
     return (
-      <div className={css.form_wrapper}>
-        <div className={css.phonebook_wrapper}>
-          <h2>Phonebook</h2>
-          <MyContactForm onSubmit={addContact} />
-        </div>
-
+      <div>
+        <h2 className={css.title}>Phonebook</h2>
+        <MyContactForm onSubmit={addContact} />
         <MyContactsFilter handleChange={handleFilter} />
-        <div className={css.contacts_wrapper}>
-          <h2>Contacts</h2>
-          <MyContactList removeContact={removeContact} contacts={contacts} />
-        </div>
+        <h2 className={css.title}>Contacts</h2>
+        <MyContactList removeContact={removeContact} contacts={contacts} />
       </div>
     );
   }
