@@ -1,4 +1,4 @@
-import ContactForm from './ContactForm/ContactForm';
+import ContactForm from './ContactForm/MyContacts';
 
 export const App = () => {
   return (
