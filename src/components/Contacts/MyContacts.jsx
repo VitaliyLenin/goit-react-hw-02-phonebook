@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
 
+import MyContactForm from 'components/MyContactForm/MyContactForm';
+import MyContactList from 'components/ContactList/ContactList';
+import MyContactsFilter from 'components/MyContactsFilter/MyContactsFilter';
+
 import css from './MyContacts.module.css';
 
 class MyContacts extends Component {
@@ -12,19 +16,15 @@ class MyContacts extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  addContact = e => {
-    e.preventDefault();
-    const { name } = this.state;
+  addContact = ({ name, number }) => {
     if (this.isDublicate(name)) {
       return alert(`${name} is already in contacts`);
     }
 
     this.setState(prevState => {
-      const { name, contacts, number } = prevState;
+      const { contacts } = prevState;
       const newContact = {
         id: nanoid(),
         name,
@@ -35,16 +35,15 @@ class MyContacts extends Component {
     });
   };
 
-  removeContact(id) {
+  handleFilter = ({ target }) => {
+    this.setState({ filter: target.value });
+  };
+
+  removeContact = id => {
     this.setState(({ contacts }) => {
       const newContact = contacts.filter(contact => contact.id !== id);
       return { contacts: newContact };
     });
-  }
-
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
   };
 
   isDublicate(name) {
@@ -73,59 +72,20 @@ class MyContacts extends Component {
   }
 
   render() {
-    const { addContact, handleChange } = this;
-    const { name, number } = this.state;
+    const { addContact, removeContact, handleFilter } = this;
     const contacts = this.getFilteredContacts();
-    const names = contacts.map(({ id, name, number }) => (
-      <li key={id}>
-        {name} : {number}
-        <button onClick={() => this.removeContact(id)} type="button">
-          Delete
-        </button>
-      </li>
-    ));
 
     return (
       <div className={css.form_wrapper}>
         <div className={css.phonebook_wrapper}>
           <h2>Phonebook</h2>
-          <form onSubmit={addContact}>
-            <label>Name</label>
-            <input
-              onChange={handleChange}
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={name}
-            />
-
-            <label>Number</label>
-            <input
-              onChange={handleChange}
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={number}
-            />
-
-            <button type="submit"> Add contact</button>
-          </form>
+          <MyContactForm onSubmit={addContact} />
         </div>
 
-        <div>
-          <label>Find contacts by name</label>
-          <input onChange={handleChange} name="filter" type="text" />
-        </div>
-
+        <MyContactsFilter handleChange={handleFilter} />
         <div className={css.contacts_wrapper}>
           <h2>Contacts</h2>
-          <ul>
-            <li> {names}</li>
-          </ul>
+          <MyContactList removeContact={removeContact} contacts={contacts} />
         </div>
       </div>
     );
